@@ -133,3 +133,4 @@ Widget _getItemWidget({@required Catalogue catalog}) {
 
 # Sample
 
+<img src="http://files.ortrue.cn/draggable_tree_view.gif" alt="show" />
