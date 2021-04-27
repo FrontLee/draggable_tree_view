@@ -7,30 +7,30 @@ A draggable tree view for Flutter.
 You need to provide a flat list for tree data. For example,
 
 ### Original tree data:
-Node 1
-|-- Node 2
-|-- Node 3 
-|-- Node 4
-|   |-- Node 5
-|   '-- Node 6
-Node 7
-'-- Node 8
+Node 1   
+|-- Node 2   
+|-- Node 3   
+|-- Node 4   
+|   |-- Node 5   
+|   '-- Node 6   
+Node 7   
+'-- Node 8   
 
 ### Provided tree data:
-Node 1
-Node 2
-Node 3
-Node 4
-Node 5
-Node 6
-Node 7
-Node 8
+Node 1    
+Node 2   
+Node 3   
+Node 4   
+Node 5   
+Node 6   
+Node 7   
+Node 8   
 
-Each node with following properties: 
-Key key: required.
-Widget item: the widget to diaplay node. Required.
-int display: control the draggable tree view either to show this node or not. For example, collapse Node 1, Node 2~6 should set display to false. You should handle the node display by your self.
-int level: the node indent level, to determine the drag target indicator shown position. Default 0.
+Each node with following properties:    
+Key key: required.   
+Widget item: the widget to diaplay node. Required.   
+int display: control the draggable tree view either to show this node or not. For example, collapse Node 1, Node 2~6 should set display to false. You should handle the node display by your self.    
+int level: the node indent level, to determine the drag target indicator shown position. Default 0.   
 
 ```
 DraggableTreeView(
