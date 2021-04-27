@@ -2,8 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Author by: FrontLee(李锋)
-// Email: ortrue@163.com
+// Author: FrontLee(李锋)<ortrue@163.com>
 // Changes based on the reorderable_list.dart
 
 import 'dart:math';

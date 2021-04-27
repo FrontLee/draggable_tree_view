@@ -2,8 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Author by: FrontLee(李锋)
-// Email: ortrue@163.com
+// Author: FrontLee(李锋)<ortrue@163.com>
 // Changes based on the reorderable_list.dart
 
 library draggable_tree_view;
@@ -31,16 +30,19 @@ typedef void Hovering(int index);
 class DraggableTreeView extends StatefulWidget {
   DraggableTreeView({
     @required this.itemList,
+    @required this.indicatorSide,
+    @required this.indicatorCenter,
+    this.indicatorOffset = Offset.zero,
+    this.hasScrollBar = false,
+    this.indentStep = 10.0,
     this.onDragEnd,
     this.onDragStart,
     this.onDraging,
-    this.hasScrollBar = false,
-    this.indentStep = 10.0,
     this.onHovering,
     this.hoveringDelay = 600,
-    this.padding = EdgeInsets.zero,
     this.proxyDecorator,
     this.buildDefaultDragHandles = true,
+    this.padding = EdgeInsets.zero,
     this.header,
     this.scrollDirection = Axis.vertical,
     this.reverse = false,
@@ -56,63 +58,65 @@ class DraggableTreeView extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
   }) : assert(itemList != null);
 
+  // Node widgets
   final List<Item> itemList;
+  // Widget when indicator is at the side of node
+  final Widget indicatorSide;
+  // Widget when indicator is in the middle of node
+  final Widget indicatorCenter;
+  // Indicator widget offset
+  final Offset indicatorOffset;
+  // Show scroll bar
   final bool hasScrollBar;
+  // Indent at different levels
   final double indentStep;
+  // Drag end callback
   final DragEnd onDragEnd;
+  // Drag start callback
   final DragStart onDragStart;
+  // Draging callback
   final Draging onDraging;
+  // Call when draging and hovering on the node for a while
   final Hovering onHovering;
-  final EdgeInsets padding;
+  // How long does hover event start
   final int hoveringDelay;
+
   final DraggableItemProxyDecorator proxyDecorator;
+
   final bool buildDefaultDragHandles;
 
-  /// A non-reorderable header item to show before the items of the list.
+  final EdgeInsets padding;
+
+  /// A non-draggable header item to show before the items of the list.
   ///
   /// If null, no header will appear before the list.
   final Widget header;
 
-  /// {@macro flutter.widgets.scroll_view.scrollDirection}
   final Axis scrollDirection;
 
-  /// {@macro flutter.widgets.scroll_view.reverse}
   final bool reverse;
 
-  /// {@macro flutter.widgets.scroll_view.controller}
   final ScrollController scrollController;
-
-  /// {@macro flutter.widgets.scroll_view.primary}
 
   /// Defaults to true when [scrollDirection] is [Axis.vertical] and
   /// [scrollController] is null.
   final bool primary;
 
-  /// {@macro flutter.widgets.scroll_view.physics}
   final ScrollPhysics physics;
 
-  /// {@macro flutter.widgets.scroll_view.shrinkWrap}
   final bool shrinkWrap;
 
-  /// {@macro flutter.widgets.scroll_view.anchor}
   final double anchor;
 
-  /// {@macro flutter.rendering.RenderViewportBase.cacheExtent}
   final double cacheExtent;
 
-  /// {@macro flutter.widgets.scrollable.dragStartBehavior}
   final DragStartBehavior dragStartBehavior;
 
-  /// {@macro flutter.widgets.scroll_view.keyboardDismissBehavior}
-  ///
   /// The default is [ScrollViewKeyboardDismissBehavior.manual]
   final ScrollViewKeyboardDismissBehavior keyboardDismissBehavior;
 
-  /// {@macro flutter.widgets.scrollable.restorationId}
   final String restorationId;
 
-  /// {@macro flutter.material.Material.clipBehavior}
-  ///
   /// Defaults to [Clip.hardEdge].
   final Clip clipBehavior;
 
@@ -126,11 +130,17 @@ class DraggableTreeViewState extends State<DraggableTreeView> {
   double indicatorLeft = 0;
   double indicatorTop = -100;
   BuildContext context;
-  String indicatorImage = 'images/indicator.png';
   Timer hoveringTimer;
   bool draging = false;
   int hoveringIndex = -1;
   int hoverStartTime = 0;
+  Widget indicator;
+
+  @override
+  void initState() {
+    super.initState();
+    indicator = widget.indicatorSide;
+  }
 
   @override
   void dispose() {
@@ -184,10 +194,11 @@ class DraggableTreeViewState extends State<DraggableTreeView> {
             onDragStart: (int index, double start, double end) {
               draging = true;
               hoveringIndex = -1;
-              indicatorLeft = widget.itemList[index].level * 10.0;
+              indicatorLeft = widget.itemList[index].level * widget.indentStep +
+                  widget.indicatorOffset.dx;
               start = globalToLocal(context, start);
-              indicatorTop = start + 2;
-              indicatorImage = 'images/indicator.png';
+              indicator = widget.indicatorSide;
+              indicatorTop = start + 2 + widget.indicatorOffset.dy;
               indicatorStateSetter(() {});
               startHoveringTimer();
               if (widget.onDragStart != null) {
@@ -197,24 +208,25 @@ class DraggableTreeViewState extends State<DraggableTreeView> {
             onDraging: (int oldIndex, int newIndex, int newPos, double start,
                 double end) {
               indicatorLeft =
-                  widget.itemList[newIndex].level * widget.indentStep;
+                  widget.itemList[newIndex].level * widget.indentStep +
+                      widget.indicatorOffset.dx;
               double height = end - start;
               start = globalToLocal(context, start);
               end = start + height;
               int now = new DateTime.now().millisecondsSinceEpoch;
               if (newPos == 1) {
-                indicatorTop = start + 2;
-                indicatorImage = 'images/indicator.png';
+                indicatorTop = start + 2 + widget.indicatorOffset.dy;
+                indicator = widget.indicatorSide;
                 hoverStartTime = now;
                 hoveringIndex = -1;
               } else if (newPos == 3) {
-                indicatorTop = end - 2;
-                indicatorImage = 'images/indicator.png';
+                indicatorTop = end - 2 + widget.indicatorOffset.dy;
+                indicator = widget.indicatorSide;
                 hoverStartTime = now;
                 hoveringIndex = -1;
               } else {
-                indicatorTop = start + height * 0.5;
-                indicatorImage = 'images/indicator_center.png';
+                indicatorTop = start + height * 0.5 + widget.indicatorOffset.dy;
+                indicator = widget.indicatorCenter;
                 if (newIndex != hoveringIndex) {
                   hoverStartTime = now;
                 }
@@ -229,14 +241,7 @@ class DraggableTreeViewState extends State<DraggableTreeView> {
       StatefulBuilder(builder: (BuildContext context, StateSetter stateSetter) {
         indicatorStateSetter = stateSetter;
         return Positioned(
-            left: indicatorLeft,
-            top: indicatorTop - 15,
-            child: Image.asset(
-              indicatorImage,
-              height: 30,
-              width: 200,
-              fit: BoxFit.cover,
-            ));
+            left: indicatorLeft, top: indicatorTop, child: indicator);
       })
     ]);
   }

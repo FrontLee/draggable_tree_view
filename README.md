@@ -51,7 +51,22 @@ int level: the node indent level, to determine the drag target indicator shown p
 DraggableTreeView(
     itemList: _getItemList(),
     indentStep: 10.0,
+    indicatorCenter: Image.asset(
+        'images/indicator_center.png',
+        height: 30,
+        width: 200,
+        fit: BoxFit.cover,
+    ),
+    indicatorSide: Image.asset(
+        'images/indicator.png',
+        height: 30,
+        width: 200,
+        fit: BoxFit.cover,
+    ),
+    indicatorOffset: Offset(0, -15),
     onDragStart: (int index, double start, double end) {
+        // start: according to axis, the drag item start position
+        // end: according to axis, the drag item end position
         Catalogue catalog = catalogs[index];
         if (catalog.expanded == true) {
             catalog.expanded = false;
@@ -61,6 +76,12 @@ DraggableTreeView(
     },
     onDraging: (int oldIndex, int newIndex, int newPos,
         double start, double end) {
+        // oldIndex: drag index
+        // newIndex: target index
+        // newPos: to target's 1-before 2-middle 3-after
+        // start: according to axis, the target item start position
+        // end: according to axis, the target item end position
+
     },
     onHovering: (int index) {
         Catalogue catalog = catalogs[index];
@@ -71,7 +92,9 @@ DraggableTreeView(
         }
     },
     onDragEnd: (int oldIndex, int newIndex, int newPos) {
-        // do something to reorder the list...
+        // oldIndex: drag index
+        // newIndex: target index
+        // newPos: to target's 1-before 2-middle 3-after
     },
 )
 
