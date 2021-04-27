@@ -4,12 +4,25 @@ A draggable tree view for Flutter.
 
 # Installing
 
-Add this to your pubspec.yaml file (publishing, not available yet)
+## Via git
+Add this to your pubspec.yaml file
+
+```
+draggable_tree_view:
+  git:
+    url: https://github.com/FrontLee/draggable_tree_view.git
+    ref: main
+```
+
+## Via package (publishing, not available yet)
+
+Add this to your pubspec.yaml file
 
 ```
 dependencies:
   draggable_tree_view: ^0.0.1
 ```
+
 
 And run
 
