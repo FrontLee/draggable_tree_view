@@ -2,7 +2,22 @@
 
 A draggable tree view for Flutter.
 
-## Getting Started
+# Installing
+
+Add this to your pubspec.yaml file (publishing, not available yet)
+
+```
+dependencies:
+  draggable_tree_view: ^0.0.1
+```
+
+And run
+
+```
+flutter packages get
+```
+
+# Example
 
 You need to provide a flat list for tree data. For example,
 
@@ -115,3 +130,6 @@ Widget _getItemWidget({@required Catalogue catalog}) {
 }
 
 ```
+
+# Sample
+
