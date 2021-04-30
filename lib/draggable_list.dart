@@ -545,7 +545,7 @@ class SliverDraggableListState extends State<SliverDraggableList>
   ///
   /// If no drag is active, this will do nothing.
   void cancelDrag() {
-    widget.onDragCancel();
+    if (_reorderingDrag) widget.onDragCancel();
     _dragReset();
   }
 
@@ -609,7 +609,7 @@ class SliverDraggableListState extends State<SliverDraggableList>
   }
 
   void _dragCancel(_DragInfo item) {
-    if (item != null) widget.onDragCancel.call();
+    if (_reorderingDrag) widget.onDragCancel.call();
     _dragReset();
   }
 
