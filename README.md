@@ -8,7 +8,7 @@ Add this to your pubspec.yaml file
 
 ```
 dependencies:
-  draggable_tree_view: ^0.0.1
+  draggable_tree_view: ^0.0.2
 ```
 
 
