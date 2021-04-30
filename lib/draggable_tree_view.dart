@@ -21,6 +21,7 @@ typedef void DragStart(int index, double start, double end);
 typedef void Draging(
     int oldIndex, int newIndex, int newPos, double start, double end);
 typedef void Hovering(int index);
+typedef void DragCancel();
 
 /// # Tree View
 ///
@@ -38,6 +39,7 @@ class DraggableTreeView extends StatefulWidget {
     this.onDragEnd,
     this.onDragStart,
     this.onDraging,
+    this.onDragCancel,
     this.onHovering,
     this.hoveringDelay = 600,
     this.proxyDecorator,
@@ -76,6 +78,8 @@ class DraggableTreeView extends StatefulWidget {
   final DragStart onDragStart;
   // Draging callback
   final Draging onDraging;
+  // Drag cancel callback
+  final DragCancel onDragCancel;
   // Call when draging and hovering on the node for a while
   final Hovering onHovering;
   // How long does hover event start
@@ -185,11 +189,18 @@ class DraggableTreeViewState extends State<DraggableTreeView> {
               draging = false;
               hoveringIndex = -1;
               cancelHoveringTimer();
-              indicatorTop = -100;
+              indicatorTop = -10000;
               indicatorStateSetter(() {});
-              if (newIndex < 0) return;
               if (widget.onDragEnd != null)
                 widget.onDragEnd(oldIndex, newIndex, newPos);
+            },
+            onDragCancel: () {
+              draging = false;
+              hoveringIndex = -1;
+              cancelHoveringTimer();
+              indicatorTop = -10000;
+              indicatorStateSetter(() {});
+              if (widget.onDragCancel != null) widget.onDragCancel();
             },
             onDragStart: (int index, double start, double end) {
               draging = true;

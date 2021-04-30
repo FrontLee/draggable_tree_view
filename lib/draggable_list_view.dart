@@ -20,6 +20,7 @@ class DraggableListView extends StatefulWidget {
     @required this.onDragEnd,
     @required this.onDragStart,
     @required this.onDraging,
+    @required this.onDragCancel,
     this.proxyDecorator,
     this.buildDefaultDragHandles = true,
     this.padding,
@@ -55,6 +56,7 @@ class DraggableListView extends StatefulWidget {
     @required this.onDragEnd,
     @required this.onDragStart,
     @required this.onDraging,
+    @required this.onDragCancel,
     this.proxyDecorator,
     this.buildDefaultDragHandles = true,
     this.padding,
@@ -86,6 +88,8 @@ class DraggableListView extends StatefulWidget {
   final Draggable.DragStartCallback onDragStart;
 
   final Draggable.DragingCallback onDraging;
+
+  final Draggable.DragCancelCallback onDragCancel;
 
   final Draggable.DraggableItemProxyDecorator proxyDecorator;
 
@@ -170,6 +174,7 @@ class _DraggableListViewState extends State<DraggableListView> {
           onDragEnd: widget.onDragEnd,
           onDragStart: widget.onDragStart,
           onDraging: widget.onDraging,
+          onDragCancel: widget.onDragCancel,
           proxyDecorator: widget.proxyDecorator,
           buildDefaultDragHandles: widget.buildDefaultDragHandles,
           padding: widget.padding,
@@ -215,6 +220,7 @@ class _DraggableListViewContent extends StatefulWidget {
     @required this.onDragEnd,
     @required this.onDragStart,
     @required this.onDraging,
+    @required this.onDragCancel,
     @required this.proxyDecorator,
     @required this.buildDefaultDragHandles,
     @required this.padding,
@@ -238,6 +244,7 @@ class _DraggableListViewContent extends StatefulWidget {
   final Draggable.DragEndCallback onDragEnd;
   final Draggable.DragStartCallback onDragStart;
   final Draggable.DragingCallback onDraging;
+  final Draggable.DragCancelCallback onDragCancel;
   final Draggable.DraggableItemProxyDecorator proxyDecorator;
   final bool buildDefaultDragHandles;
   final EdgeInsets padding;
@@ -449,6 +456,7 @@ class _DraggableListViewContentState extends State<_DraggableListViewContent> {
               onDragEnd: widget.onDragEnd,
               onDragStart: widget.onDragStart,
               onDraging: widget.onDraging,
+              onDragCancel: widget.onDragCancel,
               proxyDecorator: widget.proxyDecorator ?? _proxyDecorator,
             ),
           ),

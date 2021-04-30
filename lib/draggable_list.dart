@@ -24,6 +24,8 @@ typedef DragStartCallback = void Function(int index, double start, double end);
 typedef DragingCallback = void Function(
     int oldIndex, int newIndex, int newPos, double start, double end);
 
+typedef DragCancelCallback = void Function();
+
 /// Signature for the builder callback used to decorate the dragging item in
 /// [DraggableList] and [SliverDraggableList].
 ///
@@ -77,6 +79,7 @@ class DraggableList extends StatefulWidget {
     @required this.onDragEnd,
     @required this.onDragStart,
     @required this.onDraging,
+    @required this.onDragCancel,
     this.proxyDecorator,
     this.padding,
     this.scrollDirection = Axis.vertical,
@@ -126,6 +129,8 @@ class DraggableList extends StatefulWidget {
   final DragStartCallback onDragStart;
 
   final DragingCallback onDraging;
+
+  final DragCancelCallback onDragCancel;
 
   /// {@template flutter.widgets.Draggable_list.proxyDecorator}
   /// A callback that allows the app to add an animated decoration around
@@ -313,6 +318,7 @@ class DraggableListState extends State<DraggableList> {
             onDragStart: widget.onDragStart,
             onDragEnd: widget.onDragEnd,
             onDraging: widget.onDraging,
+            onDragCancel: widget.onDragCancel,
             proxyDecorator: widget.proxyDecorator,
           ),
         ),
@@ -355,6 +361,7 @@ class SliverDraggableList extends StatefulWidget {
     @required this.onDragEnd,
     @required this.onDragStart,
     @required this.onDraging,
+    @required this.onDragCancel,
     this.proxyDecorator,
   })  : assert(itemCount >= 0),
         super(key: key);
@@ -371,6 +378,8 @@ class SliverDraggableList extends StatefulWidget {
   final DragStartCallback onDragStart;
 
   final DragingCallback onDraging;
+
+  final DragCancelCallback onDragCancel;
 
   /// {@macro flutter.widgets.Draggable_list.proxyDecorator}
   final DraggableItemProxyDecorator proxyDecorator;
@@ -536,11 +545,7 @@ class SliverDraggableListState extends State<SliverDraggableList>
   ///
   /// If no drag is active, this will do nothing.
   void cancelDrag() {
-    if (_dragItem == null) {
-      widget.onDragEnd.call(-1, -1, -1);
-    } else {
-      widget.onDragEnd.call(_dragItem.index, -1, -1);
-    }
+    widget.onDragCancel();
     _dragReset();
   }
 
@@ -604,7 +609,7 @@ class SliverDraggableListState extends State<SliverDraggableList>
   }
 
   void _dragCancel(_DragInfo item) {
-    widget.onDragEnd.call(_dragItem.index, -1, -1);
+    widget.onDragCancel.call();
     _dragReset();
   }
 
