@@ -609,7 +609,7 @@ class SliverDraggableListState extends State<SliverDraggableList>
   }
 
   void _dragCancel(_DragInfo item) {
-    widget.onDragCancel.call();
+    if (item != null) widget.onDragCancel.call();
     _dragReset();
   }
 
