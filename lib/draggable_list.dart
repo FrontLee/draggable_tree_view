@@ -276,7 +276,7 @@ class DraggableListState extends State<DraggableList> {
   void startItemDrag({
     @required int index,
     @required PointerDownEvent event,
-    @required MultiDragGestureRecognizer<MultiDragPointerState> recognizer,
+    @required MultiDragGestureRecognizer recognizer,
   }) {
     _sliverDraggableListKey.currentState
         .startItemDrag(index: index, event: event, recognizer: recognizer);
@@ -474,7 +474,7 @@ class SliverDraggableListState extends State<SliverDraggableList>
   int _insertIndex;
   int _insertPos; // 1-前 2-中 3-后
   Offset _finalDropPosition;
-  MultiDragGestureRecognizer<MultiDragPointerState> _recognizer;
+  MultiDragGestureRecognizer _recognizer;
 
   ScrollableState _scrollable;
   Axis get _scrollDirection => axisDirectionToAxis(_scrollable.axisDirection);
@@ -516,7 +516,7 @@ class SliverDraggableListState extends State<SliverDraggableList>
   void startItemDrag({
     @required int index,
     @required PointerDownEvent event,
-    @required MultiDragGestureRecognizer<MultiDragPointerState> recognizer,
+    @required MultiDragGestureRecognizer recognizer,
   }) {
     assert(0 <= index && index < widget.itemCount);
     setState(() {
@@ -1048,7 +1048,7 @@ class DraggableDragStartListener extends StatelessWidget {
   /// By default this returns an [ImmediateMultiDragGestureRecognizer] but
   /// subclasses can use this to customize the drag start gesture.
   @protected
-  MultiDragGestureRecognizer<MultiDragPointerState> createRecognizer() {
+  MultiDragGestureRecognizer createRecognizer() {
     return ImmediateMultiDragGestureRecognizer(debugOwner: this);
   }
 
@@ -1086,7 +1086,7 @@ class DraggableDelayedDragStartListener extends DraggableDragStartListener {
   }) : super(key: key, child: child, index: index);
 
   @override
-  MultiDragGestureRecognizer<MultiDragPointerState> createRecognizer() {
+  MultiDragGestureRecognizer createRecognizer() {
     return DelayedMultiDragGestureRecognizer(debugOwner: this);
   }
 }
