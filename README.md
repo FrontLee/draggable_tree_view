@@ -159,9 +159,9 @@ Widget _getItemWidget({@required Catalogue catalog}) {
 
 <img src="http://files.ortrue.cn/draggable_tree_view.gif" alt="show" />
 
-Sample code, please view /lib/sample, when you try the sample code, please do following step:
+Sample code, please view /example, when you try the sample code, please do following step:
 
-1、copy files under /lib/sample/images to your project /images
+1、copy files under /example/images to your project /images
 
 2、 add following code to your pubspec.yaml
 ```
@@ -171,7 +171,7 @@ flutter:
     - images/indicator_center.png
 ```
 
-3、 copy catalogue.dart and draggable_tree_view.dart to your project, set your home to DraggableTreeViewTest(), as follow:
+3、 copy /example/catalogue.dart and /example/draggable_tree_view.dart to your project, fix import and set your home to DraggableTreeViewTest(), as follow:
 
 ```
 void main() async {

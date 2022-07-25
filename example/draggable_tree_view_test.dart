@@ -1,5 +1,4 @@
 import 'package:draggable_tree_view/draggable_tree_view.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'catalogue.dart';
