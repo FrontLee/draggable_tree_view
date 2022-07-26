@@ -17,8 +17,6 @@ And run
 flutter packages get
 ```
 
-Sorry, I failed to publish 0.0.3 to pub.dev (because I got no VPN), please add the /lib/draggable_list.dart, /lib/draggable_list_view.dart, /lib/draggable_tree_view.dart to your own project.
-
 # Example
 
 You need to provide a flat list for tree data. For example,
